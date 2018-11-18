@@ -1,0 +1,79 @@
+Assignment 6
+Write a program in C++ that calculates the GCD of two numbers using the Euclidean algorithm.
+
+Requirements:
+
+ Allow the user to input both numbers
+ Validate that the numbers are positive integers
+ Display the amount of time it took to calculate the GCD (hint: use the system clock)
+ Afterwards, ask the user if they want to re-run the program
+ 
+ ================================================================
+Johnnie Phelps 
+Assignment # 6
+
+//Johnnie Phelps
+//Assignment 6 GCD Calculator
+//videos that helped
+//https://www.youtube.com/watch?v=oEx5vGNFrLk
+#include <iostream>
+#include <string>
+#include <chrono>
+using namespace std;
+using namespace chrono;
+void loopAgain();
+int GCD(int, int);
+int main()
+{
+	loopAgain();
+	
+	return 0;
+}
+void loopAgain()
+{
+	auto start = high_resolution_clock::now();
+	string choice;
+	int num1, num2;
+	
+	cout << "Enter two positive values to get their Greatest Common Divisor.\n";
+	cout << "Enter value one: ";
+	cin >> num1;
+	cout << "Enter value two: ";
+	cin >> num2;
+	if (num1 < 0 || num2 < 0)
+	{
+		cout << "Please input a postive(s) integer.\n";
+		loopAgain();
+	}
+	else
+	{
+		chrono::high_resolution_clock::time_point t1 = chrono::high_resolution_clock::now();
+		cout << "The GCD of " << num1 << " and " << num2 << " is: " << GCD(num1, num2) << endl;
+		auto stop = high_resolution_clock::now();
+		auto duration = duration_cast<microseconds>(stop - start);
+		auto duration2 = duration_cast<nanoseconds>(stop - start);
+		cout << "Duration: " << duration.count() << " microseconds (" << duration2.count() << " nanoseconds)." << endl;
+	}
+
+	do
+	{
+		cout << "Would you like to run the program again?(Y/N) ";
+		cin >> choice;
+		if (choice == "Y" || choice == "y")
+		{
+			loopAgain();
+		}	
+		else
+		{
+			exit(0);
+		}
+	} while (choice == "Y" || choice == "y");	
+}
+int GCD(int num1, int num2)
+{
+	if (num1 == 0)
+	{
+		return num2;
+	}
+	return GCD(num2 % num1, num1);
+}
