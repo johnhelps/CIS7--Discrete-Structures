@@ -1,0 +1,80 @@
+Assignment 2
+Part 1: (15 points)
+
+ Create a file called "Assignment 2.md" in your github repository
+ Show that p->q and q' -> p' are logically equivalent without using truth tables or a "contrapositive" law (don't assume they are true)
+ Show that (p->r) ^ (q->r) <=> (p v q) -> r
+ Give an interpretation to prove that the following wff is not valid: (Ǝx)A(x) ^ (Ǝx)B(x) -> (Ǝx)(A(x) ^ B(x))
+Part 2: (5 points)
+
+ Add support for parentheses in your WFF calculator that you did for assignment 1
+ 
+ Part 1.
+ 
+ p->q <=> q'->p'
+'p v q <=> q''v p' implication law
+
+'p v q <=> q v p' Double Negation
+
+p->q <=> p->q implication
+
+Part 2.
+
+(p->r)^(q->r) <=> (p v q)-> r
+('p v r) ^ ('q v r)<=> (p v q)-> r Dist law
+
+ ('p ^ q') v r <=> (p v q) -> r Morgan's law
+  
+  '(p v q) v r <=> (p v q) -> r Impl law
+  
+  = (p v q) -> r 
+  
+Part 3.
+
+There are birds and there are bees, sometimes there are birds and bees.
+
+===============================================================================
+//Johnnie Phelps
+//Assignment 2 WFF Stuff Paranthesis
+//videos that helped out
+//https://www.youtube.com/watch?v=9K4N6MO_R1Y
+#include <iostream>
+#include <string>
+#include <regex>
+using namespace std;
+void loopAgain();
+
+int main()
+{
+	loopAgain();
+
+	return 0;
+}
+void loopAgain()
+{
+	
+	char choice;
+
+	do{
+		string input;
+		regex reg("^\\s*!?\\(?*\\s*[A-UW-Z]\\s*\\)?*\\s*((\\^|V|->)\\s*!?\\(?*\\s*\\s*[A-UW-Z]\\s*\\)?*\\s*)*$");
+
+		cout << "Please enter a WFF: " << endl;
+		getline(cin,input);
+		//cin.ignore();
+
+		if (regex_match(input,reg))
+		{
+			cout << "That is a WFF." << endl;
+		}
+		else
+		{
+			cout << "The input " << input << " is NOT a WFF." << endl;
+			loopAgain();
+		}
+		cout << "Would you like to quit? (Y/N)" << endl;
+		cin >> choice;
+		cin.ignore();
+
+	} while (choice == 'N' || choice == 'n');
+}
