@@ -1,0 +1,57 @@
+Assignment 1
+Part 1: Write a program in C++ that will parse a string and indicate whether or not it is a WFF (10 pts)
+
+ Prompt the user for a string input
+ Parse the string and indicate whether or not the string is a WFF
+ Allow the user to enter a new string or quit
+ Only the following input is allowed: ^, V, !, A-Z (capital letters only)
+Part 2: If, Then support (10 pts)
+
+ Add support for the "->" connector
+ 
+ ====================================================================
+ 
+//Johnnie Phelps 2307414
+//Assignment 1 WFF Stuff
+//videos that helped out
+//https://www.youtube.com/watch?v=9K4N6MO_R1Y
+#include <iostream>
+#include <string>
+#include <regex>
+using namespace std;
+void loopAgain();
+
+int main()
+{
+	loopAgain();
+
+	return 0;
+}
+void loopAgain()
+{
+	
+	char choice;
+
+	do{
+		string input;
+		regex reg("^\\s*!?\\s*[A-UW-Z]\\s*((\\^|V|->)\\s*!?\\s*[A-UW-Z]\\s*)*$");
+
+		cout << "Please enter a WFF: " << endl;
+		getline(cin,input);
+		//cin.ignore();
+
+		if (regex_match(input,reg))
+		{
+			cout << "That is a WFF." << endl;
+		}
+		else
+		{
+			cout << "The input " << input << " is NOT a WFF." << endl;
+			loopAgain();
+		}
+		cout << "Would you like to quit? (Y/N)" << endl;
+		cin >> choice;
+		cin.ignore();
+
+	} while (choice == 'N' || choice == 'n');
+}
