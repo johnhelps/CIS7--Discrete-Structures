@@ -1,0 +1,129 @@
+Assignment 7
+Write a program that prints out step-by-step instructions for completing the Tower of Hanoi.
+
+Requirements:
+
+- [ ] Asks the user for 1 integer indicating the number of disks to use.  Then have the program solve the Tower of Hanoi problem recursively.
+- [ ] Have the program print out each move (for example: "Move disk from tower A to tower C")
+
+If you are comfortable solving this using OOP, then:	
+- [ ] Next have the program print out a visual representation of each tower in between moves.  For instance, after the first move, the console could show:
+```
+Tower A: -,2,3
+Tower B: -,-,-
+Tower C: -,-,1
+Move disk 1 to Tower C
+```	
+- [ ] After each move, wait for user input and clear the screen
+
+	If you are NOT comfortable solving this using OOP, then:
+- [ ] Write another program that simply outputs the factorial of a given input
+
+===========================================================
+//Johnnie Phelps
+//Assignment 7 Tower of Hanoi
+//video sources that helped
+// https://www.youtube.com/watch?v=YstLjLCGmgg&t 
+// https://www.youtube.com/watch?v=B7njBOiYmRw
+// https://www.youtube.com/watch?v=Cq1h1KPoGBU
+#include <iostream>
+#include <vector>
+using namespace std;
+void move(int, char, char, char, vector<int>&, vector<int>&, vector<int>&);
+void removeDisk(char, vector<int>&, vector<int>&, vector<int>&);
+void addDisk(int, char, vector<int>&, vector<int>&, vector<int>&);
+void printTowers(vector<int>&, vector<int>&, vector<int>&);
+int main()
+{
+	vector <int> towerA, towerB, towerC;
+	int num;
+	cout << "TOWER OF HANOI\n";
+	cout << "How many number of disks would you like to use? ";
+	cin >> num;
+	cout << endl;
+	for (int i = num; i > 0; i--)
+	{
+		towerA.push_back(i);
+	}
+	printTowers(towerA, towerB, towerC);
+	move(num, 'A', 'C', 'B', towerA, towerB, towerC);
+	system("PAUSE");
+	return 0;
+}
+void move(int count, char from_rod, char to_rod, char aux_rod, vector<int>&towerA, vector<int>&towerB, vector<int>&towerC)
+{
+			if (count == 1)
+		{
+			removeDisk(from_rod, towerA, towerB, towerC);
+			addDisk(count, to_rod, towerA, towerB, towerC);
+			printTowers(towerA, towerB, towerC);
+
+			cout << "Move disk " << count << " from rod " << from_rod << " to rod " << to_rod << endl;
+			return;
+		}
+
+	move(count - 1, from_rod, aux_rod, to_rod, towerA, towerB, towerC);
+	removeDisk(from_rod, towerA, towerB, towerC);
+	addDisk(count, to_rod, towerA, towerB, towerC);
+	printTowers(towerA, towerB, towerC);
+
+	cout << "Move disk " << count << " from rod " << from_rod << " to rod " << to_rod << endl;
+
+	move(count - 1, aux_rod, to_rod, from_rod, towerA, towerB, towerC);
+}
+void removeDisk(char from_rod, vector<int>&towerA, vector<int>&towerB, vector<int>&towerC)
+{
+	if (from_rod == 'A')
+	{
+		towerA.pop_back();
+	}
+	else if (from_rod == 'B')
+	{
+		towerB.pop_back();
+	}
+	else if (from_rod == 'C')
+	{
+		towerC.pop_back();
+	}
+}
+void addDisk(int count, char to_rod, vector<int>&towerA, vector<int>&towerB, vector<int>&towerC)
+{
+	if (to_rod == 'A')
+	{
+		towerA.push_back(count);
+	}
+	else if (to_rod == 'B')
+	{
+		towerB.push_back(count);
+	}
+	else if (to_rod == 'C')
+	{
+		towerC.push_back(count);
+	}
+}
+void printTowers(vector<int>&towerA, vector<int>&towerB, vector<int>&towerC)
+{
+	cout << "Press Any Key To Continue...\n";
+	cin.get();
+
+	cout << "Tower A: ";
+	for (int i = 0; i < towerA.size(); i++)
+	{
+		cout << towerA.at(i) << "-";
+	}
+	cout << endl;
+
+	cout << "Tower B: ";
+	for (int i = 0; i < towerB.size(); i++)
+	{
+		cout << towerB.at(i) << "-";
+	}
+	cout << endl;
+
+	cout << "Tower C: ";
+	for (int i = 0; i < towerC.size(); i++)
+	{
+		cout << towerC.at(i) << "-";
+	}
+	cout << endl;
+}
